@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="tutorial-detail">
+        <h1>{{ tutorial.title }}</h1>
+        <p>{{ tutorial.content }}</p>
+        <p>Likes: {{ tutorial.likes }} | Dislikes: {{ tutorial.dislikes }}</p>
+
+        <form method="POST" action="{{ url_for('like_dislike', id=tutorial.id) }}">
+            <button type="submit" name="action" value="like">Like</button>
+            <button type="submit" name="action" value="dislike">Dislike</button>
+        </form>
+
+        <h3>Comments</h3>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.content }} - By {{ comment.author.username }} at {{ comment.date_posted }}</li>
+            {% endfor %}
+        </ul>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.content.label }} {{ form.content() }}
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+{% endblock %}
